@@ -1,18 +1,44 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
+import account
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout
 
 
-class MyApp(QWidget):
+class MyApp(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Building S')
+        self.setWindowTitle('My First Application')
+
+        loginButton = QPushButton('로그인')
+        loginButton.clicked.connect(self.loginButtonClicked)
+        signUpButton = QPushButton('회원가입')
+        signUpButton.clicked.connect(self.signUpButtonClicked)
+
+        accountLayout = QHBoxLayout()
+        accountLayout.addWidget(loginButton)
+        accountLayout.addWidget(signUpButton)
+
+        centralWidget = QWidget()
+        centralWidget.setLayout(accountLayout)
+        self.setCentralWidget(centralWidget)
+
         self.move(300, 300)
-        self.resize(400, 200)
+        self.resize(200, 100)
         self.show()
+    
+    def loginButtonClicked(self):
+        self.loginWidget = account.loginWidget()
+        self.loginWidget.loginShow()
+        self.loginWidget.show()
+    
+    def signUpButtonClicked(self):
+        self.signUpWidget = account.signUpWidget()
+        self.signUpWidget.signUpShow()
+        self.signUpWidget.show()
+
 
 
 if __name__ == '__main__':
