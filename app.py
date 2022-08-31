@@ -1,7 +1,8 @@
 import sys
 import account
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout
-
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout, QDialog, QDesktopWidget, QLabel, QVBoxLayout
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import Qt
 
 class MyApp(QMainWindow):
 
@@ -10,7 +11,16 @@ class MyApp(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('My First Application')
+        self.setWindowTitle('Building Structure Supervise')
+        self.setWindowIcon(QIcon('./PNG/simbollogo.png'))
+        logoPNG = QPixmap('./PNG/logo.png')
+        logoPNG = logoPNG.scaledToHeight(80)
+
+        logoImg = QLabel()
+        logoImg.setPixmap(logoPNG)
+
+        logoBox = QVBoxLayout()
+        logoBox.addWidget(logoImg)    
 
         loginButton = QPushButton('로그인')
         loginButton.clicked.connect(self.loginButtonClicked)
@@ -21,11 +31,13 @@ class MyApp(QMainWindow):
         accountLayout.addWidget(loginButton)
         accountLayout.addWidget(signUpButton)
 
+        logoBox.addLayout(accountLayout)
+
         centralWidget = QWidget()
-        centralWidget.setLayout(accountLayout)
+        centralWidget.setLayout(logoBox)
         self.setCentralWidget(centralWidget)
 
-        self.move(300, 300)
+        self.center()
         self.resize(200, 100)
         self.show()
     
@@ -38,6 +50,17 @@ class MyApp(QMainWindow):
         self.signUpWidget = account.signUpWidget()
         self.signUpWidget.signUpShow()
         self.signUpWidget.show()
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+       
+
+class MainUI(QDialog):
+    def __init__(self):
+        super().__init__()
+
 
 
 
