@@ -1,6 +1,6 @@
 import sys
 import account
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout, QDialog
 
 
 class MyApp(QMainWindow):
@@ -38,6 +38,11 @@ class MyApp(QMainWindow):
         self.signUpWidget = account.signUpWidget()
         self.signUpWidget.signUpShow()
         self.signUpWidget.show()
+
+class MainUI(QDialog):
+    def __init__(self):
+        super().__init__()
+
 
 
 
