@@ -1,10 +1,11 @@
 import sys
 import account
+import logo
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QHBoxLayout, QDialog, QDesktopWidget, QLabel, QVBoxLayout
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
-class MyApp(QMainWindow):
+class MyApp(logo.iconMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -12,15 +13,11 @@ class MyApp(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle('Building Structure Supervise')
-        self.setWindowIcon(QIcon('./PNG/simbollogo.png'))
-        logoPNG = QPixmap('./PNG/logo.png')
-        logoPNG = logoPNG.scaledToHeight(80)
 
-        logoImg = QLabel()
-        logoImg.setPixmap(logoPNG)
+        logoLabel = logo.logoWidget().createLogo(80)
 
-        logoBox = QVBoxLayout()
-        logoBox.addWidget(logoImg)    
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(logoLabel)
 
         loginButton = QPushButton('로그인')
         loginButton.clicked.connect(self.loginButtonClicked)
@@ -31,10 +28,10 @@ class MyApp(QMainWindow):
         accountLayout.addWidget(loginButton)
         accountLayout.addWidget(signUpButton)
 
-        logoBox.addLayout(accountLayout)
+        mainLayout.addLayout(accountLayout)
 
         centralWidget = QWidget()
-        centralWidget.setLayout(logoBox)
+        centralWidget.setLayout(mainLayout)
         self.setCentralWidget(centralWidget)
 
         self.center()

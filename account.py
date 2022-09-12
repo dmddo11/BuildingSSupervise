@@ -1,5 +1,5 @@
 import sys
-import pymysql
+import mysql
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QVBoxLayout
 
 
@@ -26,7 +26,7 @@ class loginWidget(QWidget):
 
         loginLayout = QVBoxLayout()
         loginLayout.addWidget(self.idLineEdit)
-        loginLayout.addWidget(self.passwordLineEdit)
+        loginLayout.addWidget(self.passwordLineEdit)            
 
         return loginLayout
 
@@ -64,13 +64,8 @@ class signUpWidget(loginWidget):
         return signUpLayout
     
     def signUp(self):
-        con = pymysql.connect(host='localhost', user='root', password='qwerasdf12', db='bss', charset='utf8')
-        cur = con.cursor()
-        sql = "select * from user"
-        cur.execute(sql)
-        rows = cur.fetchall()
-        print(rows)
-        con.close()
+        userDB = mysql.userDB()
+        userDB.insert(self.nameLineEdit.text(), self.idLineEdit.text(), self.passwordLineEdit.text(), self.emailLineEdit.text())
 
         
 
