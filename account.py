@@ -1,5 +1,6 @@
 import sys
 import mysql
+import encryption
 from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QVBoxLayout
 
 
@@ -31,10 +32,11 @@ class loginWidget(QWidget):
         return loginLayout
 
     def login(self):
-        if (self.idLineEdit.text() == 'admin' and self.passwordLineEdit.text() == 'admin'):
-            print('login success!')
-        else:
-            print('login failed!')
+        userDB = mysql.userDB()
+        dbPassword = userDB.getPassword(self.idLineEdit.text()).encode('utf-8')
+        encrypt = encryption.hash(self.passwordLineEdit.text())
+        print(encrypt.checkHash(dbPassword))
+
 
 
 class signUpWidget(loginWidget):
@@ -65,7 +67,9 @@ class signUpWidget(loginWidget):
     
     def signUp(self):
         userDB = mysql.userDB()
-        userDB.insert(self.nameLineEdit.text(), self.idLineEdit.text(), self.passwordLineEdit.text(), self.emailLineEdit.text())
+        encrypt = encryption.hash(self.passwordLineEdit.text())
+        password = encrypt.makeHash().decode('utf-8')
+        userDB.insert(self.nameLineEdit.text(), self.idLineEdit.text(), password, self.emailLineEdit.text())
 
         
 

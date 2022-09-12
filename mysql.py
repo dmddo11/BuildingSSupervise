@@ -20,3 +20,13 @@ class userDB():
             con.commit()
         cur.close()
         con.close()
+    
+    def getPassword(self, id: str):
+        con = pymysql.connect(host='localhost', user='root', password='qwerasdf12', db='bss', charset='utf8')
+        cur = con.cursor()
+        getPasswordQuery = "select password from user where id='" + id + "';"
+        print('getPasswordQuery : ', getPasswordQuery)
+        cur.execute(getPasswordQuery)
+        getPasswordResult = cur.fetchall()[0][0]
+        print('getPasswordResult : ', getPasswordResult)
+        return getPasswordResult
